@@ -46,15 +46,15 @@ Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo de
 
 3. Instala las dependencias:
 
-    ````
+    ```
     uv pip install -r requirements.txt
     ```
 4. Ejecuta la aplicación:
-    ````
+    ```
     uv venv exec python main.py
     ```
 5. 📁 Estructura del proyecto
-    ````
+    ```
     workaware/
     │
     ├── main.py                     # Ejecución principal
@@ -65,7 +65,7 @@ Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo de
     ├── posture_detector.log        # Log generado por sesión
     ├── requirements.txt            # Dependencias del proyecto
     └── README.md                   # Este archivo
-    ````
+    ```
 6. 🚀 Próximas funcionalidades
     🔜 Gestión de tareas
     Permite ingresar tareas y obtener una organización óptima de ejecución, basada en prioridades.
