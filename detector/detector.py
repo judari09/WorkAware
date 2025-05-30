@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 
 
+
 """_summary_
 posture detector es una clase que procesa la imagen de la camra de video 
 y detecta si la persona esta encorvada o no.
@@ -29,7 +30,8 @@ class PostureDetector:
             min_tracking_confidence=tracking_confidence
         )
         self.drawing_utils = mp.solutions.drawing_utils
-        self.pose_landmarks = None
+        self.pose_landmarks = None      
+        
 
     def process(self, frame):
         # Convert BGR to RGB
@@ -65,8 +67,8 @@ class PostureDetector:
         avg_shoulder_y = (left_shoulder.y + right_shoulder.y) / 2
         avg_mouth_y = (left_mouth.y + right_mouth.y) / 2
         vertical_diff = abs(avg_shoulder_y - avg_mouth_y)
-
-        return forward_lean > 0.05 or vertical_diff < 0.15
-
+        slouched = forward_lean > 0.05 or vertical_diff < 0.15
+        return slouched
+    
     def close(self):
         self.holistic.close()
