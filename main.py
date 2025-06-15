@@ -6,6 +6,7 @@ from core.db_actions import *
 import time
 from database import engine
 from structures.task import Base  # Asegúrate de que Task hereda de Base
+from datetime import datetime
 
 class Tasker():
     
@@ -49,6 +50,13 @@ if __name__ == "__main__":
             stimated_duration = int(input("Duración estimada en horas: "))
             type_task = input("Tipo de tarea (work, personal, study): ")
 
+            #due_date = datetime.strptime(due_date, "%Y-%m-%d").date() if due_date else #None
+            #now = datetime.now()
+            #if due_date and due_date < now.date():
+            #    print("La fecha de vencimiento no puede ser anterior a la fecha actual.")
+            #    continue
+            
+            
             task = Task(
                 title=title,
                 description=description,
@@ -64,6 +72,8 @@ if __name__ == "__main__":
         elif choice == '2':
             tasks = get_task_list(get_db())
             for task in tasks:
+                if task.is_expired:
+                    print(f"{task.id}: {task.title} - {task.status} (Expirada)")
                 print(f"{task.id}: {task.title} - {task.status}")
         
         elif choice == '3':
