@@ -46,15 +46,15 @@ Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo de
 
 3. Instala las dependencias:
 
-    ````
+    ```
     uv pip install -r requirements.txt
     ```
 4. Ejecuta la aplicación:
-    ````
+    ```
     uv venv exec python main.py
     ```
 5. 📁 Estructura del proyecto
-    ````
+    ```
     workaware/
     │
     ├── main.py                     # Ejecución principal
@@ -65,8 +65,9 @@ Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo de
     ├── posture_detector.log        # Log generado por sesión
     ├── requirements.txt            # Dependencias del proyecto
     └── README.md                   # Este archivo
-    ````
+    ```
 6. 🚀 Próximas funcionalidades
+
     🔜 Gestión de tareas
     Permite ingresar tareas y obtener una organización óptima de ejecución, basada en prioridades.
 
@@ -79,10 +80,14 @@ Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo de
     🔜 Exportación de reportes
     Generación de reportes PDF con gráficos y logs detallados.
 
-7. 💡 Objetivo
+8. 💡 Objetivo
+   
     Mejorar la salud postural y productividad de personas que trabajan largas horas frente al computador, combinando inteligencia artificial, visión por computadora y principios de ergonomía.
 
-👨‍💻 Autor
-    Desarrollado por Juan David Rivaldo Diaz Sierra
-    linkedin: https://www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222/ 
+9. 👨‍💻 Autor
+
+    Desarrollado por: Juan David Rivaldo Diaz Sierra
+   
+    linkedin: https://www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222/
+   
     Licencia: MIT
