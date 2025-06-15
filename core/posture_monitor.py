@@ -11,7 +11,7 @@ class PostureMonitor:
         self.notifier = Notifier("sounds/short-bang.mp3")
         self.logger = SessionLogger()
         self.cap = cv2.VideoCapture(0)
-
+        self.running = False  # Flag para controlar el hilo
         self.good_time = 0
         self.bad_time = 0
         self.start_time = time.time()
@@ -21,8 +21,9 @@ class PostureMonitor:
         self.last_posture = None
 
     def run(self):
+        self.running = True
         try:
-            while self.cap.isOpened():
+            while self.cap.isOpened() and self.running:
                 ret, frame = self.cap.read()
                 if not ret:
                     break
@@ -64,6 +65,9 @@ class PostureMonitor:
         finally:
             self._terminate()
 
+    def stop(self):
+        self.running = False
+
     def _terminate(self):
         # registrar último tramo
         end = time.time()
@@ -75,7 +79,7 @@ class PostureMonitor:
 
         total = end - self.start_time
         self.logger.log_summary(self.good_time, self.bad_time, total)
-        self.logger.plot_summary(self.good_time, self.bad_time, total)
+        #self.logger.plot_summary(self.good_time, self.bad_time, total)
 
         self.cap.release()
         cv2.destroyAllWindows()
