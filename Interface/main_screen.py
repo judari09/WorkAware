@@ -1,15 +1,13 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import flet as ft
-from core.db_actions import *
-import add_update_screen
+from app.db_actions import *
 import threading
-from core.posture_monitor import PostureMonitor
+from app.posture_monitor import PostureMonitor
 import time
 
-def create_card(task, on_delete):
+def create_card(task, on_delete, page):
     # Icono de prioridad
     if task.priority >= 5:
         priority_icon = ft.Icon(ft.Icons.PRIORITY_HIGH, color=ft.Colors.RED)
@@ -20,7 +18,7 @@ def create_card(task, on_delete):
 
     # Icono de estado
     if task.status == "pending":
-        status_icon = ft.Icon(ft.Icons.HOURGLASS_EMPTY, color=ft.Colors.GREY)
+        status_icon = ft.Icon(ft.Icons.PENDING, color=ft.Colors.GREY)
     elif task.status == "in_progress":
         status_icon = ft.Icon(ft.Icons.AUTORENEW, color=ft.Colors.BLUE)
     elif task.status == "completed":
@@ -66,8 +64,8 @@ def create_card(task, on_delete):
                             ft.Text(f"Type: {task.type_task}"),
                         ],col={"xs": 12, "sm": 4, "md": 3},alignment=ft.MainAxisAlignment.START,expand=True),
                         ft.Row([
-                            ft.TextButton("View"),
-                            ft.TextButton("Edit"),
+                            ft.TextButton("View",on_click=lambda e: page.go(f"/view_screen?id={task.id}")),
+                            ft.TextButton("Edit", on_click=lambda e: page.go(f"/update_task?id={task.id}")),
                             ft.TextButton("Delete", on_click=lambda e: on_delete(task.id))
                         ], col={"xs": 12, "sm": 4, "md": 3},alignment=ft.MainAxisAlignment.END,expand=True),
                     ],alignment=ft.MainAxisAlignment.SPACE_BETWEEN, expand=True),padding=10),
@@ -78,6 +76,7 @@ def create_card(task, on_delete):
     )
 
 def main_screen(page: ft.Page):
+    page.route == "/"
     page.title = "Main Screen"
     page.adaptive = True
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
@@ -88,9 +87,9 @@ def main_screen(page: ft.Page):
         bgcolor=ft.Colors.BLUE_GREY_900,
         actions=[
             ft.IconButton(
-                icon=ft.Icons.SETTINGS,
-                tooltip="Settings",
-                on_click=lambda _: print("Settings clicked")
+                icon=ft.Icons.HOME,
+                tooltip="main",
+                on_click=lambda e: page.go("/")
             ),
             ft.IconButton(
                 icon=ft.Icons.INFO,
@@ -226,7 +225,7 @@ def main_screen(page: ft.Page):
                 except:
                     continue
             filtered.append(task)
-        task_column.controls = [create_card(task, on_delete_task) for task in filtered] if filtered else [ft.Text("No hay tareas registradas.")]
+        task_column.controls = [create_card(task, on_delete_task, page) for task in filtered] if filtered else [ft.Text("No hay tareas registradas.")]
         page.update()
 
     # Asignar eventos

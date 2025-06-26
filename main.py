@@ -1,98 +1,79 @@
-# main.py
-from core.posture_monitor import PostureMonitor
-import threading
-from structures.task import Task
-from core.db_actions import *
-import time
-from database import engine
-from structures.task import Base  # Asegúrate de que Task hereda de Base
-from datetime import datetime
+from app.db_actions import *
+import urllib.parse
+import flet as ft
+from Interface.main_screen import main_screen
+from Interface.add_update_screen import add_screen, update_screen
+from Interface.expand_task_screen import expand_task
+from app.db_actions import get_task, get_db
 
-class Tasker():
-    
-    title: str
-    description: str
-    status: str  # e.g., 'pending', 'in_progress', 'completed'
-    priority: int   # 1 is low priority, 5 is high priority
-    due_date: str  # Store as ISO format string
-    stimated_duration: int  # Duration in hours
-    type_task: str  # e.g., 'work', 'personal', 'study'
 
-def run_posture_monitor():
-    monitor = PostureMonitor()
-    monitor.run()
+def flet_main(page: ft.Page):
+    def route_change(e):
+        page.clean()
+        if page.route == "/" or page.route == "":
+            main_screen(page)
+        elif page.route == "/add_task":
+            add_screen(page)
+        elif page.route.startswith("/view_screen"):
+            params = urllib.parse.parse_qs(page.route.split("?")[1]) if "?" in page.route else {}
+            task_id_str = str(params.get("id", [None])[0])
+            # Solo permitir números positivos
+            if not (task_id_str and task_id_str.isdigit() and int(task_id_str) > 0):
+                page.add(ft.Text(f"ID de tarea inválido o no proporcionado: {task_id_str}"))
+                page.update()
+                return
+            task_id = int(task_id_str)
+            db = get_db()
+            task = get_task(db, task_id)
+            db.close()
+            if task:
+                task_data = {
+                    "id": task.id,
+                    "title": task.title,
+                    "description": task.description,
+                    "status": task.status,
+                    "priority": task.priority,
+                    "due_date": str(task.due_date),
+                    "stimated_duration": task.stimated_duration,
+                    "type_task": task.type_task
+                }
+                expand_task(page, task_data)
+            else:
+                page.add(ft.Text("Tarea no encontrada"))
+
+        elif page.route.startswith("/update_task"):
+            params = urllib.parse.parse_qs(page.route.split("?")[1]) if "?" in page.route else {}
+            task_id_str = str(params.get("id", [None])[0])
+            # Solo permitir números positivos
+            if not (task_id_str and task_id_str.isdigit() and int(task_id_str) > 0):
+                page.add(ft.Text(f"ID de tarea inválido o no proporcionado: {task_id_str}"))
+                page.update()
+                return
+            task_id = int(task_id_str)
+            db = get_db()
+            task = get_task(db, task_id)
+            db.close()
+            if task:
+                task_data = {
+                    "id": task.id,
+                    "title": task.title,
+                    "description": task.description,
+                    "status": task.status,
+                    "priority": task.priority,
+                    "due_date": str(task.due_date),
+                    "stimated_duration": task.stimated_duration,
+                    "type_task": task.type_task
+                }
+                update_screen(page, task_data)
+            else:
+                page.add(ft.Text("Tarea no encontrada"))
+        page.update()
+
+    page.on_route_change = route_change
+    page.go(page.route)
 
 if __name__ == "__main__":
-    Base.metadata.create_all(bind=engine)
-    t1 = threading.Thread(target=run_posture_monitor, daemon=True)
-    t1.start()
-    time.sleep(5)  # Give the monitor some time to start
-    print("Posture monitor started in a separate thread.")
-    # Example usage of Tasker and database actions
-    tasker = Tasker()
-    print("ES HORA DE ORGANIZARTE")
-    print("Bienvenido al gestor de tareas. Por favor, selecciona una opción:")
-    while True:
-        print("-"*50)
-        print("1. Añadir tarea")
-        print("2. Ver tareas")
-        print("3. Actualizar tarea")
-        print("4. Eliminar tarea")
-        print("5. Salir")
-        print("-"*50)
-        choice = input("Selecciona una opción: ")
-        if choice == '1':
-            title = input("Título de la tarea: ")
-            description = input("Descripción de la tarea: ")
-            status = input("Estado (pending, in_progress, completed): ")
-            priority = int(input("Prioridad (1-5): "))
-            due_date = input("Fecha de vencimiento (YYYY-MM-DD): ")
-            stimated_duration = int(input("Duración estimada en horas: "))
-            type_task = input("Tipo de tarea (work, personal, study): ")
-
-            #due_date = datetime.strptime(due_date, "%Y-%m-%d").date() if due_date else #None
-            #now = datetime.now()
-            #if due_date and due_date < now.date():
-            #    print("La fecha de vencimiento no puede ser anterior a la fecha actual.")
-            #    continue
-            
-            
-            task = Task(
-                title=title,
-                description=description,
-                status=status,
-                priority=priority,
-                due_date=due_date,
-                stimated_duration=stimated_duration,
-                type_task=type_task
-            )
-            add_task(get_db(), task)
-            print("Tarea añadida exitosamente.")
-        
-        elif choice == '2':
-            tasks = get_task_list(get_db())
-            for task in tasks:
-                if task.is_expired:
-                    print(f"{task.id}: {task.title} - {task.status} (Expirada)")
-                print(f"{task.id}: {task.title} - {task.status}")
-        
-        elif choice == '3':
-            task_id = int(input("ID de la tarea a actualizar: "))
-            field = input("Campo a actualizar (title, description, status, priority, due_date, stimated_duration, type_task): ")
-            value = input(f"Nuevo valor para {field}: ")
-            update_task(get_db(), task_id, **{field: value})
-            print("Tarea actualizada exitosamente.")
-        
-        elif choice == '4':
-            task_id = int(input("ID de la tarea a eliminar: "))
-            delete_task(get_db(), task_id)
-            print("Tarea eliminada exitosamente.")
-        
-        elif choice == '5':
-            print("Saliendo del programa.")
-            break
-        else:
-            print("Opción no válida. Inténtalo de nuevo.")
+    ft.app(target=flet_main)
 
 
 

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from structures.task import Task
+from models.task import Task
 
 def get_db():
     db = SessionLocal()
@@ -26,10 +26,10 @@ def add_task(db:get_db, task: Task):
     db.refresh(task)
     return task
 
-def get_task(db: Session, task_title: str):
-    if not task_title:
-        raise ValueError("Task title cannot be empty.")
-    return db.query(Task).filter(Task.title == task_title).first()
+def get_task(db: Session, task_id: int):
+    if not task_id:
+        raise ValueError("Task id cannot be empty.")
+    return db.query(Task).filter(Task.id == task_id).first()
 
 def get_task_list(db: Session):
     return db.query(Task).all()

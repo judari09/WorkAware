@@ -2,8 +2,8 @@
 import time
 import cv2
 from detector.detector import PostureDetector
-from core.notifier import Notifier
-from core.session_loggin import SessionLogger
+from app.notifier import Notifier
+from app.session_logger import SessionLogger
 
 class PostureMonitor:
     def __init__(self):
