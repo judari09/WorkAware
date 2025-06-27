@@ -75,5 +75,8 @@ workaware/
 
 ## Créditos
 
-Desarrollado por Juan David y colaboradores.  
+Desarrollado por **Juan David Rivaldo Diaz Sierra** (2025)  
+📧 [juandavidrivaldo1@gmail.com](mailto:juandavidrivaldo1@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222)
+
 Basado en Flet, SQLAlchemy, Plyer, Pygame y otras librerías de código abierto.

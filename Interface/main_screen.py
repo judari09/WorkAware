@@ -1,3 +1,7 @@
+# Workaware - Copyright (c) 2025 Juan David Rivaldo Diaz Sierra
+# www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222 
+# Desarrollado por Juan David. Todos los derechos reservados.
+
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -94,7 +98,7 @@ def main_screen(page: ft.Page):
             ft.IconButton(
                 icon=ft.Icons.INFO,
                 tooltip="About",
-                on_click=lambda e: page.open(ft.SnackBar(ft.Text("Workaware v1.0 - Tu asistente de productividad y postura por Juan David Rivaldo Diaz Sierra."))),
+                on_click=lambda e: page.open(ft.SnackBar(ft.Text("Workaware v1.0 - Tu asistente de productividad y postura Juan David Rivaldo Diaz Sierra 2025. Todos los derechos reservados."))),
                 )
         ])
 

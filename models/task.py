@@ -1,3 +1,7 @@
+# Workaware - Copyright (c) 2025 Juan David Rivaldo Diaz Sierra
+# www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222 
+# Desarrollado por Juan David. Todos los derechos reservados.
+
 from sqlalchemy import Column, Integer, String
 from database import Base
 from datetime import datetime

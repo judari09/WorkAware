@@ -1,3 +1,7 @@
+# Workaware - Copyright (c) 2025 Juan David Rivaldo Diaz Sierra
+# www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222 
+# Desarrollado por Juan David. Todos los derechos reservados.
+
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
