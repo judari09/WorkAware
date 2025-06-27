@@ -1,4 +1,4 @@
-# Workaware
+# Workaware v1.0.0
 
 **Workaware** es una aplicación de escritorio multiplataforma para la gestión de tareas y el monitoreo de postura, desarrollada en Python usando [Flet](https://flet.dev/).
 
