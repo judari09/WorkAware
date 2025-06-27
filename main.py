@@ -1,13 +1,34 @@
 from app.db_actions import *
 import urllib.parse
 import flet as ft
+import asyncio
 from Interface.main_screen import main_screen
 from Interface.add_update_screen import add_screen, update_screen
 from Interface.expand_task_screen import expand_task
 from app.db_actions import get_task, get_db
 
 
-def flet_main(page: ft.Page):
+
+def splash_screen(page: ft.Page):
+    page.clean()
+    #page.bgcolor = ft.Colors.BLUE_GREY_900
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.add(
+        ft.Column([
+            ft.Image(src="assets/icon.png", width=100, height=100),
+            ft.Text("Workaware", size=32, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
+            ft.ProgressRing(color=ft.Colors.WHITE, width=40, height=40)
+        ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
+    )
+    page.update()
+
+
+async def flet_main(page: ft.Page):
+    splash_screen(page)
+    await asyncio.sleep(2)  # Espera 2 segundos
+    page.go("/")
+
     def route_change(e):
         page.clean()
         if page.route == "/" or page.route == "":
@@ -72,8 +93,14 @@ def flet_main(page: ft.Page):
     page.on_route_change = route_change
     page.go(page.route)
 
+
 if __name__ == "__main__":
-    ft.app(target=flet_main, assets_dir="assets",name="WorkAware",)
+    ft.app(
+        target=flet_main,
+        assets_dir="assets/",
+        name="WorkAware",
+        #window_icon="assets/icon.ico"
+    )
 
 
 

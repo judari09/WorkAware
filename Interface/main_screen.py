@@ -239,6 +239,7 @@ def main_screen(page: ft.Page):
     
     page.add(
         ft.ResponsiveRow([
+            ft.Row([ft.Image(src="assets/icon.png", width=50, height=50, fit=ft.ImageFit.CONTAIN),
             ft.Column(
                 [
                     ft.Text("Welcome to Workaware!", style=ft.TextStyle(size=24, weight=ft.FontWeight.BOLD)),
@@ -247,13 +248,13 @@ def main_screen(page: ft.Page):
                 alignment=ft.MainAxisAlignment.START,
                 spacing=10,
                 expand=True,
-                col={"xs": 12, "sm": 5, "md": 4}
-            ),
+                
+            )],col={"xs": 12, "sm": 5, "md": 5},expand=True),
             ft.Container(
                 content=ft.Switch(label="Posture monitoring", value=False, on_change=on_switch_change),
                 alignment=ft.alignment.top_right,
                 expand=True,
-                col={"xs": 12, "sm": 5, "md": 2}
+                col={"xs": 12, "sm": 2, "md": 2}
             ),
         ],alignment=ft.MainAxisAlignment.SPACE_BETWEEN, expand=True),
         
