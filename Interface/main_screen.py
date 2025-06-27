@@ -150,19 +150,31 @@ def main_screen(page: ft.Page):
     #crear control del hilo para el monitor de postura
     posture_monitor = None
     posture_thread = None
+    running = False
+
+    # Inicializa el estado global si no existe
+    if not hasattr(page, "posture_monitor"):
+        page.posture_monitor = None
+    if not hasattr(page, "posture_thread"):
+        page.posture_thread = None
+    if not hasattr(page, "posture_running"):
+        page.posture_running = False
 
     def on_switch_change(e):
-        nonlocal posture_monitor, posture_thread
         if e.control.value:
-            # Crear nueva instancia cada vez que se activa
-            posture_monitor = PostureMonitor()
-            posture_thread = threading.Thread(target=posture_monitor.run, daemon=True)
-            posture_thread.start()
+            # Iniciar monitor solo si no está corriendo
+            if not page.posture_running or not (page.posture_thread and page.posture_thread.is_alive()):
+                page.posture_monitor = PostureMonitor()
+                page.posture_thread = threading.Thread(target=page.posture_monitor.run, daemon=True)
+                page.posture_thread.start()
+                page.posture_running = True
         else:
-            if posture_monitor and posture_thread and posture_thread.is_alive():
-                posture_monitor.stop()
-                posture_thread.join()
-                page.open(ft.SnackBar(ft.Text(f"Posture monitoring summary: good posture: {time.strftime('%H:%M:%S', time.gmtime(posture_monitor.good_time))}, bad posture: {time.strftime('%H:%M:%S', time.gmtime(posture_monitor.bad_time))}.",), duration=5000))
+            if page.posture_monitor and page.posture_thread and page.posture_thread.is_alive():
+                page.posture_monitor.stop()
+                page.posture_thread.join()
+                page.posture_running = False
+                page.open(ft.SnackBar(ft.Text(
+                    f"Posture monitoring summary: good posture: {time.strftime('%H:%M:%S', time.gmtime(page.posture_monitor.good_time))}, bad posture: {time.strftime('%H:%M:%S', time.gmtime(page.posture_monitor.bad_time))}.",), duration=5000))
 
     def on_delete_task(task_id):
         delete_task(get_db(), task_id)
@@ -237,6 +249,13 @@ def main_screen(page: ft.Page):
     # Inicializar lista
     filter_tasks()
     
+    # Switch de monitoreo de postura, usa el estado global
+    posture_switch = ft.Switch(
+        label="Posture monitoring",
+        value=page.posture_running,
+        on_change=on_switch_change
+    )
+
     page.add(
         ft.ResponsiveRow([
             ft.Row([ft.Image(src="assets/icon.png", width=50, height=50, fit=ft.ImageFit.CONTAIN),
@@ -251,7 +270,7 @@ def main_screen(page: ft.Page):
                 
             )],col={"xs": 12, "sm": 5, "md": 5},expand=True),
             ft.Container(
-                content=ft.Switch(label="Posture monitoring", value=False, on_change=on_switch_change),
+                content=posture_switch,
                 alignment=ft.alignment.top_right,
                 expand=True,
                 col={"xs": 12, "sm": 2, "md": 2}

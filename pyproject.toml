@@ -8,6 +8,8 @@ authors = [
     { name = "Juan David Rivaldo Diaz Sierra", email = "juandavidrivaldo@gmail.com" }
 ]
 dependencies = [
+    "certifi>=2025.4.26",
+    "flet>=0.28.3",
     "mediapipe>=0.10.21",
     "opencv-python>=4.11.0.86",
     "plyer>=2.1.0",

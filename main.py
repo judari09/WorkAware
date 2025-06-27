@@ -25,12 +25,14 @@ def splash_screen(page: ft.Page):
 
 
 async def flet_main(page: ft.Page):
+    # Inicializa los atributos globales si no existen
     splash_screen(page)
     await asyncio.sleep(2)  # Espera 2 segundos
     page.go("/")
 
     def route_change(e):
         page.clean()
+        # Detecta si el hilo está corriendo
         if page.route == "/" or page.route == "":
             main_screen(page)
         elif page.route == "/add_task":
