@@ -31,7 +31,7 @@ def add_screen(page: ft.Page):
     
     status = [
         ft.dropdown.Option("Pending (Pendiente)", leading_icon=ft.Icon(ft.Icons.PENDING, color=ft.Colors.ORANGE)),
-        ft.dropdown.Option("In progress (En progreso)",leading_icon=ft.Icon(ft.Icons.AUTORENEW, color=ft.Colors.BLUE)),
+        ft.dropdown.Option("In_progress (En progreso)",leading_icon=ft.Icon(ft.Icons.AUTORENEW, color=ft.Colors.BLUE)),
         ft.dropdown.Option("Completed (Completada)", leading_icon=ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN))]
     
     #campo de texto para la fecha de vencimiento
@@ -195,7 +195,7 @@ def update_screen(page: ft.Page, task_data=None):
     
     status = [
         ft.dropdown.Option("Pending (Pendiente)", leading_icon=ft.Icon(ft.Icons.PENDING, color=ft.Colors.ORANGE)),
-        ft.dropdown.Option("In progress (En progreso)",leading_icon=ft.Icon(ft.Icons.AUTORENEW, color=ft.Colors.BLUE)),
+        ft.dropdown.Option("In_progress (En progreso)",leading_icon=ft.Icon(ft.Icons.AUTORENEW, color=ft.Colors.BLUE)),
         ft.dropdown.Option("Completed (Completada)", leading_icon=ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN))]
     
     # Campo de texto para la fecha de vencimiento

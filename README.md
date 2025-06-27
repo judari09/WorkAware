@@ -1,93 +1,79 @@
-# WorkAware 🧠💺
+# Workaware
 
-**WorkAware** es una estación personal de productividad y salud digital. Ayuda al usuario a mantener una postura adecuada frente al computador, emite alertas correctivas, registra estadísticas de postura durante la sesión y genera reportes gráficos.
-
----
-
-## 📌 Funcionalidades actuales
-
-✅ **Monitoreo de postura en tiempo real**  
-Detecta si el usuario está encorvado usando visión por computadora.
-
-✅ **Alertas correctivas**  
-Si se mantiene una mala postura durante más de 10 segundos, se emite una alerta sonora y una notificación de sistema.
-
-✅ **Registro de actividad**  
-Guarda un log con:
-- Cambios de postura detectados.
-- Tiempos acumulados de buena y mala postura.
-- Tiempo total de la sesión.
-
-✅ **Reporte gráfico**  
-Al finalizar la sesión, se genera un gráfico de pastel que resume el tiempo dedicado a cada tipo de postura.
+**Workaware** es una aplicación de escritorio multiplataforma para la gestión de tareas y el monitoreo de postura, desarrollada en Python usando [Flet](https://flet.dev/).
 
 ---
 
-## ⚙️ Instalación
+## Funcionalidades principales
 
-### 🔄 Requisitos previos
+- **Gestión de tareas:**  
+  Añade, edita, elimina y visualiza tareas con campos como prioridad, estado, tipo, fecha de vencimiento y duración estimada.
 
-- Python 3.10 o superior
-- Sistema operativo: Windows 10 o superior (por el uso de notificaciones `win10toast`)
-- Webcam funcional
+- **Filtros avanzados:**  
+  Filtra tareas por prioridad, estado y tipo usando menús desplegables responsivos.
 
-### 🧪 Usando `uv` (recomendado)
+- **Monitoreo de postura:**  
+  Activa o desactiva el monitor de postura con un switch. Recibe notificaciones y alertas sonoras si se detecta mala postura.
 
-1. Instala `uv` (si aún no lo tienes):
+- **Notificaciones de escritorio:**  
+  Recibe alertas visuales y sonoras cuando se detecta mala postura.
 
-   ```
-   curl -Ls https://astral.sh/uv/install.sh | sh
-   ```
-2. Clona el repositorio:
-    ```
-    git clone https://github.com/tuusuario/workaware.git
-    cd workaware
-    ```
+- **Interfaz moderna y responsive:**  
+  Uso de iconos, tarjetas y diseño adaptable a cualquier tamaño de ventana.
 
-3. Instala las dependencias:
+- **Persistencia:**  
+  Base de datos SQLite gestionada con SQLAlchemy.
 
-    ```
-    uv pip install -r requirements.txt
-    ```
-4. Ejecuta la aplicación:
-    ```
-    uv venv exec python main.py
-    ```
-5. 📁 Estructura del proyecto
-    ```
-    workaware/
-    │
-    ├── main.py                     # Ejecución principal
-    ├── detector/
-    │   └── detector.py             # Detección de postura (MediaPipe)
-    ├── sounds/
-    │   └── short-bang.mp3          # Sonido de alerta
-    ├── posture_detector.log        # Log generado por sesión
-    ├── requirements.txt            # Dependencias del proyecto
-    └── README.md                   # Este archivo
-    ```
-6. 🚀 Próximas funcionalidades
+---
 
-    🔜 Gestión de tareas
-    Permite ingresar tareas y obtener una organización óptima de ejecución, basada en prioridades.
+## Captura de pantalla
 
-    🔜 Sugerencias de descansos inteligentes
-    Basado en tiempos de productividad y mala postura.
 
-    🔜 Interfaz gráfica amigable
-    Visualización interactiva del desempeño durante la sesión.
+![Captura de pantalla de Workaware](workaware_screen.png)
 
-    🔜 Exportación de reportes
-    Generación de reportes PDF con gráficos y logs detallados.
+---
 
-8. 💡 Objetivo
-   
-    Mejorar la salud postural y productividad de personas que trabajan largas horas frente al computador, combinando inteligencia artificial, visión por computadora y principios de ergonomía.
+## Estructura del proyecto
 
-9. 👨‍💻 Autor
+```
+workaware/
+│
+├── app/
+│   ├── db_actions.py
+│   ├── notifier.py
+│   ├── posture_monitor.py
+│   ├── session_logger.py
+│   └── ...
+│
+├── detector/
+│   └── detector.py
+│
+├── Interface/
+│   ├── main_screen.py
+│   ├── add_update_screen.py
+│   ├── expand_task_screen.py
+│   └── ...
+│
+├── models/
+│   └── task.py
+│
+├── sounds/
+│   └── ...
+│
+├── assets/
+│   └── workaware.ico
+│
+├── database.py
+├── devices.db
+├── main.py
+├── README.md
+├── requirements.txt
+└── ...
+```
 
-    Desarrollado por: Juan David Rivaldo Diaz Sierra
-   
-    linkedin: https://www.linkedin.com/in/juan-david-rivaldo-diaz-sierra-72aa99222/
-   
-    Licencia: MIT
+---
+
+## Créditos
+
+Desarrollado por Juan David y colaboradores.  
+Basado en Flet, SQLAlchemy, Plyer, Pygame y otras librerías de código abierto.

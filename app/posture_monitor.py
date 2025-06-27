@@ -37,9 +37,11 @@ class PostureMonitor:
                 now = time.time()
 
                 # Alert if slouching continuously
-                if posture == "bad" and (self.last_alert_time is None or now - self.last_alert_time >= self.alert_interval):
+                if posture == "bad" and self.running and (self.last_alert_time is None or now - self.last_alert_time >= self.alert_interval):
                     self.notifier.alert()
                     self.last_alert_time = now
+                if not self.running:
+                    break  # No enviar notificaciones si ya no está corriendo
 
                 # Cambio de postura
                 if posture != self.last_posture and self.last_posture is not None:
@@ -50,7 +52,7 @@ class PostureMonitor:
                     else:
                         self.good_time += duration
                     self.posture_start_time = now
-                    self.last_alert_time = None
+                    #self.last_alert_time = None
 
                 # Mostrar estado
                 msg = "Corrige tu postura!" if slouched else "Postura correcta"

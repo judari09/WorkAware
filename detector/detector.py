@@ -67,7 +67,7 @@ class PostureDetector:
         avg_shoulder_y = (left_shoulder.y + right_shoulder.y) / 2
         avg_mouth_y = (left_mouth.y + right_mouth.y) / 2
         vertical_diff = abs(avg_shoulder_y - avg_mouth_y)
-        slouched = forward_lean > 0.05 or vertical_diff < 0.15
+        slouched = forward_lean > 0.05 or vertical_diff < 0.20
         return slouched
     
     def close(self):

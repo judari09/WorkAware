@@ -50,7 +50,7 @@ def create_card(task, on_delete, page):
                     ft.ListTile(
                         leading=ft.Icon(ft.Icons.TASK),
                         title=ft.Text(task.title),
-                        subtitle=ft.Text(task.description[:50]) 
+                        subtitle=ft.Text(task.description[:100]+"..." if len(task.description) > 100 else task.description, size=14,on_tap=lambda e: page.go(f"/view_screen?id={task.id}"))
                         if task.description else None,
                         trailing=ft.Text(due_date, color=due_date_color)
                     ),
@@ -94,8 +94,8 @@ def main_screen(page: ft.Page):
             ft.IconButton(
                 icon=ft.Icons.INFO,
                 tooltip="About",
-                on_click=lambda _: print("About clicked")
-            )
+                on_click=lambda e: page.open(ft.SnackBar(ft.Text("Workaware v1.0 - Tu asistente de productividad y postura por Juan David Rivaldo Diaz Sierra."))),
+                )
         ])
 
     # Estado de los filtros
@@ -283,5 +283,3 @@ def main_screen(page: ft.Page):
         ),], alignment=ft.MainAxisAlignment.END)
     )
 
-if __name__ == "__main__":
-    ft.app(target=main_screen)

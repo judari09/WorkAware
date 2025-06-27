@@ -4,12 +4,15 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
+authors = [
+    { name = "Juan David Rivaldo Diaz Sierra", email = "juandavidrivaldo@gmail.com" }
+]
 dependencies = [
     "mediapipe>=0.10.21",
     "opencv-python>=4.11.0.86",
+    "plyer>=2.1.0",
     "pygame>=2.6.1",
     "sqlalchemy>=2.0.41",
-    "win10toast>=0.9",
 ]
 
 [dependency-groups]
