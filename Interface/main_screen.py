@@ -277,7 +277,7 @@ def main_screen(page: ft.Page):
                 content=posture_switch,
                 alignment=ft.alignment.top_right,
                 expand=True,
-                col={"xs": 12, "sm": 2, "md": 2}
+                col={"xs": 12, "sm": 4, "md": 3}
             ),
         ],alignment=ft.MainAxisAlignment.SPACE_BETWEEN, expand=True),
         

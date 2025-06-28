@@ -21,3 +21,11 @@ dependencies = [
 dev = [
     "flet[all]>=0.28.3",
 ]
+
+[tool.setuptools]
+packages = [
+    "app",
+    "detector",
+    "models",
+    "Interface"
+]
